@@ -1,0 +1,25 @@
+{
+  "name": "nodeintroduction",
+  "version": "1.0.0",
+  "description": "Aprendiendo Node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daavid6/nodeIntroduction.git"
+  },
+  "author": "David Ruiz - daavid.6",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daavid6/nodeIntroduction/issues"
+  },
+  "homepage": "https://github.com/daavid6/nodeIntroduction#readme",
+  "dependencies": {
+    "picocolors": "1.0.1"
+  },
+  "eslintConfig": {
+    "extends": "standard"
+  }
+}
