@@ -1,0 +1,24 @@
+{
+  "name": "clase2",
+  "version": "1.0.0",
+  "description": "-   API",
+  "main": "1.http.js",
+  "scripts": {
+    "dev1": "nodemon 1.http.js",
+    "dev2": "nodemon 2.routing.js",
+    "dev3": "node --watch 3.express.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.3",
+    "standard": "^17.1.0"
+  },
+  "eslintConfig": {
+    "extends": "standard"
+  },
+  "dependencies": {
+    "express": "4.19.2"
+  }
+}
