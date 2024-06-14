@@ -1,29 +1,32 @@
 const express = require('express')
+const cors = require('cors')
 const crypto = require('node:crypto')
 const movies = require('./movies.json')
 const { validateMovie, validatePartialMovie } = require('./schemas/movies.js');
 
 const app = express()
 app.use(express.json())
+app.use(cors({
+  origin: (origin, callback) => {
+    const ACCEPTED_ORIGINS = [
+      'http://localhost:3000',
+      'http://localhost:8080',
+      'http://localhost:8081',
+      'http://movies.com'
+    ]
+
+    if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
+      return callback(null, true)
+    }
+
+    return callback(new Error('Not allowed by CORS')) 
+  }
+}))
 app.disable('x-powered-by')
 
-const ACCEPTED_ORIGINS = [
-  'http://localhost:3000',
-  'http://localhost:8080',
-  'http://localhost:8081',
-  'http://movies.com'
-]
 
 // Recuperar todas las películas, también con filtros
 app.get('/movies', (req, res) => {
-
-  // Para evitar el error CORS
-  // En vez de * podemos poner las rutas permitidas en la variable origin como http://localhost:8080
-  const origin = req.header('origin')
-  if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-
   const { genre } = req.query;
   if (genre) {
     const filteredMovies = movies.filter((movie) =>
@@ -91,11 +94,6 @@ app.patch('/movies/:id', (req, res) => {
 })
 
 app.delete('/movies/:id', (req, res) => {
-  const origin = req.header('origin');
-  if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-
   const { id } = req.params
   const movieIndex = movies.findIndex(movie => movie.id === id)
 
@@ -107,18 +105,6 @@ app.delete('/movies/:id', (req, res) => {
 
   return res.json({ message: 'Movie deleted' })
 })
-
-app.options('/movies/:id', (req, res) => {
-  const origin = req.header('origin')
-
-  if (ACCEPTED_ORIGINS.includes(origin) || !origin) {
-    res.header('Access-Control-Allow-Origin', origin);
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-  }
-
-  res.send(200)
-})
-
 
 const PORT = process.env.PORT ?? 3000
 
