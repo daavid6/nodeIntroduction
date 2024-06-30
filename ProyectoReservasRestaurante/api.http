@@ -1,0 +1,111 @@
+GET http://localhost:3000/restaurant
+###
+
+GET http://localhost:3000/restaurant/1
+###
+
+POST http://localhost:3000/restaurant
+Content-Type: application/json
+
+{
+  "name": "Restaurante Prueba",
+  "address": "Avenida Prueba"
+}
+###
+
+DELETE http://localhost:3000/restaurant/3
+###
+
+PATCH http://localhost:3000/restaurant/1
+Content-Type: application/json
+
+{
+  "name": "Restaurante Nueva Prueba"
+}
+
+### ------------------------------------------ ###
+
+GET http://localhost:3000/user
+###
+
+GET http://localhost:3000/user/1
+###
+
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+  "username": "pepote_5",
+  "password": "1234",
+  "email": "jeje@example.com"
+}
+###
+
+DELETE http://localhost:3000/user/1
+###
+
+PATCH http://localhost:3000/user/2
+Content-Type: application/json
+
+{
+  "password": "12345678"
+}
+
+### ------------------------------------------ ###
+
+GET http://localhost:3000/booking
+###
+
+GET http://localhost:3000/booking/1
+###
+
+POST http://localhost:3000/booking
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "restaurant_id": 2,
+  "table_number": 1,
+  "booking_date": "2025-09-10 23:30:00"
+}
+###
+
+DELETE http://localhost:3000/booking/1
+###
+
+PATCH http://localhost:3000/booking/3
+Content-Type: application/json
+
+{
+  "table_number": 2
+}
+
+### ------------------------------------------ ###
+
+GET http://localhost:3000/diningTable
+###
+
+GET http://localhost:3000/diningTable/1/2
+###
+
+POST http://localhost:3000/diningTable
+Content-Type: application/json
+
+{
+  "number": 3,
+  "restaurant_id": 1,
+  "seats": 19
+}
+###
+
+DELETE http://localhost:3000/diningTable/2/2
+###
+
+PATCH http://localhost:3000/diningTable/2/1
+Content-Type: application/json
+
+{
+  "seats": 8
+}
+
+### ------------------------------------------ ###
