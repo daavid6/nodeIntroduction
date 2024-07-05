@@ -2,6 +2,10 @@
 **/node_modules
 **/package-lock.json
 
+# Secrets
+.env
+**/serviceaccount.json
+
 # Testing
 /coverage
 
