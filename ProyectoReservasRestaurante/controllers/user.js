@@ -1,4 +1,6 @@
 import {validateUser, validatePartialUser} from '../schemas/user.js'
+import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 
 export class UserController {
   constructor({ userModel }) {
@@ -27,8 +29,22 @@ export class UserController {
 
     const newUser = await this.userModel.create({input: resultado.data })
     res.status(201).json(newUser)
-
   }
+
+  secret, { expiresIn: '1h' });
+    res.json({ token });
+  }
+login = async (req, res) => {
+    const { username, password } = req.body;
+    const user = await this.userModel.getByUsername({ username });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+    const token = jwt.sign({ userId: user.id }, jwtConfig.
 
   delete = async (req, res) => {
     const { id } = req.params

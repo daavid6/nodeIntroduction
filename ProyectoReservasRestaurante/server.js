@@ -1,10 +1,12 @@
 import express, {json} from 'express'
 import cors from 'cors'
 import logger from 'morgan'
+
 import { createRestaurantRouter } from './routes/restaurant.js';
 import { createUserRouter } from './routes/user.js';
 import { createBookingRouter } from './routes/booking.js';
 import { createDiningTableRouter } from './routes/diningTable.js';
+
 import { RestaurantModel } from './models/mysql/restaurant.js';
 import { UserModel } from './models/mysql/user.js';
 import { BookingModel } from './models/mysql/booking.js';

@@ -1,4 +1,5 @@
 import mysql from 'mysql2/promise'
+import bcrypt from 'bcrypt'
 
 const config = {
   host: '127.0.0.1',
@@ -27,29 +28,40 @@ export class UserModel {
 
     return users
   }
-  
-  static async create({ input }) {
-    const {
-      username,
-      password,
-      email
-    } = input
 
-    try {
-      await connection.query(
-        `insert into user (username, password, email) values (?, ?, ?)`,
-        [username, password, email]
-      )
-    } catch (error) {
-      console.error("Error ----- inserting user");
-    }
-
-    const [user] = await connection.query(
-      'SELECT id, username, password, email FROM user WHERE username = ? and password = ?  and email = ?;', 
-      [username, password, email]
+  static async getByUsername({ username }) {
+    const [users] = await connection.query(
+      'SELECT * FROM user WHERE username = ?;', 
+      [username]
     )
 
-    return user[0]
+    return users
+  }
+  
+  static async create({ input }) {
+    const { username, password, email } = input
+
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10)
+
+      await connection.beginTransaction();
+      await connection.query(
+        `insert into user (username, password, email) values (?, ?, ?)`,
+        [username, hashedPassword, email]
+      )
+
+      const [user] = await connection.query(
+        'SELECT id, username, email FROM user WHERE username = ?;', 
+        [username]
+      )
+
+      await connection.commit()
+      return user[0]
+
+    } catch (error) {
+      await connection.rollback();
+      console.error("Error ----- inserting user")
+    }
   }
 
   static async delete({ id }) {

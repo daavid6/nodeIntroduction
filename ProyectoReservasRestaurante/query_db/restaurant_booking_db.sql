@@ -32,7 +32,8 @@ create table user (
     password varchar(255) not null,
     email varchar(100),
     primary key (id),
-    unique (username, password, email)
+    unique (username),
+    unique (email)
 );
 
 create table booking (
